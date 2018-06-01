@@ -7,6 +7,8 @@ ENV BASEPATH /
 ENV ELASTICSEARCH_HOST elasticsearch
 # Port Elasticsearch runs on
 ENV ELASTICSEARCH_PORT 9200
+# Transport method - either http or https
+ENV PROTOCOL http
 
 RUN curl -L https://github.com/lmenezes/cerebro/releases/download/v0.7.3/cerebro-0.7.3.zip -o /opt/cerebro-0.7.3.zip
 RUN cd /opt \
@@ -20,7 +22,8 @@ RUN useradd -ms /bin/bash cerebro \
     && chown -R cerebro:cerebro /opt/cerebro
 COPY ./entrypoint.sh /opt/
 COPY ./application.conf /opt/cerebro/conf
-RUN chmod +x /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh \
+    && chown -R cerebro:cerebro /opt/entrypoint.sh
 USER cerebro
 STOPSIGNAL SIGTERM
 
