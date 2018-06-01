@@ -13,7 +13,9 @@ RUN cd /opt \
     && unzip cerebro-0.7.3.zip \
     && rm cerebro-0.7.3.zip \
     && mv -f /opt/cerebro-0.7.3 /opt/cerebro \
-    && rm /opt/cerebro/conf/application.conf
+    && rm /opt/cerebro/conf/application.conf \
+    && mkdir /opt/cerebro/logs \
+    && touch /opt/cerebro/logs/application.log
 RUN useradd -ms /bin/bash cerebro \
     && chown -R cerebro:cerebro /opt/cerebro
 COPY ./entrypoint.sh /opt/
