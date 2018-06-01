@@ -12,8 +12,9 @@ RUN cd /opt \
 RUN useradd -ms /bin/bash cerebro \
     && chown -R cerebro:cerebro /opt/cerebro
 RUN curl -L https://github.com/HASecuritySolutions/cerebro/raw/master/application.conf -o /opt/cerebro/conf/application.conf
-RUN sed -i "s/basePath = \"\/\"/basePath = \"$(echo $BASEPATH | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')\"/g" application.conf
+COPY ./entrypoint.sh /opt/
+RUN chmod +x /opt/entrypoint.sh
 USER cerebro
 STOPSIGNAL SIGTERM
 
-CMD /opt/cerebro/bin/cerebro
+CMD /bin/bash /opt/entrypoint.sh
