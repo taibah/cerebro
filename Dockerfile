@@ -16,7 +16,6 @@ RUN cd /opt \
     && rm /opt/cerebro/conf/application.conf
 RUN useradd -ms /bin/bash cerebro \
     && chown -R cerebro:cerebro /opt/cerebro
-RUN curl -L https://github.com/HASecuritySolutions/cerebro/raw/master/application.conf -o /opt/cerebro/conf/application.conf
 COPY ./entrypoint.sh /opt/
 RUN chmod +x /opt/entrypoint.sh
 USER cerebro
