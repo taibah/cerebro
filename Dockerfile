@@ -12,10 +12,12 @@ RUN curl -L https://github.com/lmenezes/cerebro/releases/download/v0.7.3/cerebro
 RUN cd /opt \
     && unzip cerebro-0.7.3.zip \
     && rm cerebro-0.7.3.zip \
-    && mv -f /opt/cerebro-0.7.3 /opt/cerebro
+    && mv -f /opt/cerebro-0.7.3 /opt/cerebro \
+    && rm /opt/cerebro/conf/application.conf
 RUN useradd -ms /bin/bash cerebro \
     && chown -R cerebro:cerebro /opt/cerebro
 COPY ./entrypoint.sh /opt/
+COPY ./application.conf /opt/cerebro/conf
 RUN chmod +x /opt/entrypoint.sh
 USER cerebro
 STOPSIGNAL SIGTERM
